@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35818.85 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeMatrixTest", "BikeMatrixTest.csproj", "{C2BA02C6-6EE9-40FB-91EC-4431E615ACDC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2BA02C6-6EE9-40FB-91EC-4431E615ACDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2BA02C6-6EE9-40FB-91EC-4431E615ACDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2BA02C6-6EE9-40FB-91EC-4431E615ACDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2BA02C6-6EE9-40FB-91EC-4431E615ACDC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {97856F19-2BC2-4497-8015-75A95568CC84}
+	EndGlobalSection
+EndGlobal
