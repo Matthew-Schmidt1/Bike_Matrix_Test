@@ -8,7 +8,7 @@ namespace BikeMatrixTest.Interfaces
         Task<Bikes> GetBikeAsync(int BikeId);
 
         Task<Bikes> UpdateBikeAsync(Bikes newBike);
-        Task<bool> DeleteBikeAsync(Bikes bikes);
+        Task<bool> DeleteBikeAsync(int bikesID);
 
         Task<IEnumerable<Bikes>> getAllBikesAsync();
     }

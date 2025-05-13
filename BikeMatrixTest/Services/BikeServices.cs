@@ -49,8 +49,7 @@ namespace BikeMatrixTest.Services
             _logger.LogTrace($"Starting Method {nameof(GetBikeAsync)}");
             using (var connection = new SqlConnection(_connectionString))
             {
-                var query = "EXEC GetBike @BikeID,@UserId";
-                return await connection.QueryFirstOrDefaultAsync<Bikes>(query, new { BikeID = BikeId });
+                return (await connection.QueryAsync<Bikes>("GetBike", new { BikeID = BikeId }, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
         }
 
@@ -76,14 +75,14 @@ namespace BikeMatrixTest.Services
         /// </summary>
         /// <param name="bikes"></param>
         /// <returns></returns>
-        public async Task<bool> DeleteBikeAsync(Bikes bikes)
+        public async Task<bool> DeleteBikeAsync(int bikesID)
         {
             _logger.LogTrace($"Starting Method {nameof(DeleteBikeAsync)}");
             using (var connection = new SqlConnection(_connectionString))
             {
                 var result = await connection.ExecuteScalarAsync<int>(
                     "DeleteBike",
-                    new { Id = bikes.id },
+                    new { Id = bikesID },
                     commandType: CommandType.StoredProcedure
                 );
                 _logger.LogTrace($"Ending Method {nameof(DeleteBikeAsync)}");

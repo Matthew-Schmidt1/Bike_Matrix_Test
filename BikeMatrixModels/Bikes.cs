@@ -19,5 +19,16 @@ namespace BikeMatrixModels
         public string Model { get; set; }
         [Required]
         public int YearOfManufactor { get; set; }
+
+
+        public bool ValidateObject( out List<string> errors)
+        {
+            var context = new ValidationContext(this);
+            var results = new List<ValidationResult>();
+            bool isValid = Validator.TryValidateObject(this, context, results, true);
+
+            errors = results.ConvertAll(r => r.ErrorMessage);
+            return isValid;
+        }
     }
 }

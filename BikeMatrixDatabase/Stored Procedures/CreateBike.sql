@@ -11,6 +11,6 @@ BEGIN
     VALUES (@EmailAddress, @Brand, @Model, @YearOfManufactor);
 
     -- Return the newly inserted Bike ID
-    SELECT SCOPE_IDENTITY() AS NewBikeID;
+    RETURN SCOPE_IDENTITY();
 END;
 GO
