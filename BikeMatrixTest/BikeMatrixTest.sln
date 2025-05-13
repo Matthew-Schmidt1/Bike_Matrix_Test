@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35818.85 d17.13
+VisualStudioVersion = 17.13.35818.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeMatrixTest", "BikeMatrixTest.csproj", "{C2BA02C6-6EE9-40FB-91EC-4431E615ACDC}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "BikeMatrixDatabase", "..\BikeMatrixDatabase\BikeMatrixDatabase.sqlproj", "{FD53A9C8-67D1-472B-967B-46F46111BEBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeMatrixModels", "..\BikeMatrixModels\BikeMatrixModels.csproj", "{F005854D-4E77-4570-B2D6-7B6C5D9D81B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,16 @@ Global
 		{C2BA02C6-6EE9-40FB-91EC-4431E615ACDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2BA02C6-6EE9-40FB-91EC-4431E615ACDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2BA02C6-6EE9-40FB-91EC-4431E615ACDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD53A9C8-67D1-472B-967B-46F46111BEBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD53A9C8-67D1-472B-967B-46F46111BEBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD53A9C8-67D1-472B-967B-46F46111BEBB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{FD53A9C8-67D1-472B-967B-46F46111BEBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD53A9C8-67D1-472B-967B-46F46111BEBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD53A9C8-67D1-472B-967B-46F46111BEBB}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F005854D-4E77-4570-B2D6-7B6C5D9D81B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F005854D-4E77-4570-B2D6-7B6C5D9D81B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F005854D-4E77-4570-B2D6-7B6C5D9D81B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F005854D-4E77-4570-B2D6-7B6C5D9D81B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

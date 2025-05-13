@@ -4,34 +4,44 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using System.Net;
+using BikeMatrixModels;
+using Newtonsoft.Json;
+using BikeMatrixTest.Interfaces;
 
 namespace BikeMatrixTest.Functions
 {
     public class BikeCRUD
     {
         private readonly ILogger<BikeCRUD> _logger;
-
+        private readonly IBikeServices bikeServices;
         public BikeCRUD(ILogger<BikeCRUD> logger)
         {
             _logger = logger;
         }
 
         [Function("CreateBike")]
-        [OpenApiOperation(operationId: "CreateBike", Description = "Creates a Bike for the Given USERID")]
-        [OpenApiParameter(name: "UserID", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "Userid of the user that the bike is created for.")]
-        //[OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Bike),
-        public IActionResult CreateBike([HttpTrigger(AuthorizationLevel.Function,"post", Route = "{UserID}/bike")] HttpRequest req,string userID)
+        [OpenApiOperation(operationId: "CreateBike", Description = "Creates a Bike")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Bikes), Description = "")]
+        [OpenApiRequestBody(contentType: "Json", bodyType:typeof(Bikes))]
+        public async Task<IActionResult> CreateBikeAsync([HttpTrigger(AuthorizationLevel.Function,"post", Route = "bike")] HttpRequest req,string userID)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            Bikes? bike = JsonConvert.DeserializeObject<Bikes>(requestBody);
+           
+            if (bike == null)
+                return new BadRequestObjectResult("Invalid request body");
+            await bikeServices.createBikeAsync(bike);
             return new OkObjectResult("Welcome to Azure Functions!");
         }
 
 
         [Function("GetBike")]
         [OpenApiOperation(operationId: "GetBike", Description = "Gets a Bike for the Given USERID")]
-        [OpenApiParameter(name: "UserID", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "Userid of the user")]
         [OpenApiParameter(name: "BikeID", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "Bikeid  of the Bike")]
-        public IActionResult GetBike([HttpTrigger(AuthorizationLevel.Function, "get", Route = "{UserID}/bike/{BikeID}")] HttpRequest req,string UserID, string BikeID)
+        public IActionResult GetBike([HttpTrigger(AuthorizationLevel.Function, "get", Route = "bike/{BikeID}")] HttpRequest req,string UserID, string BikeID)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
             return new OkObjectResult("Welcome to Azure Functions!");
@@ -39,19 +49,21 @@ namespace BikeMatrixTest.Functions
 
         [Function("UpdateBike")]
         [OpenApiOperation(operationId: "UpdateBike", Description = "Gets a Bike for the Given USERID")]
-        [OpenApiParameter(name: "UserID", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "Userid of the user")]
         [OpenApiParameter(name: "BikeID", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "Bikeid  of the Bike")]
-        public IActionResult UpdateBike([HttpTrigger(AuthorizationLevel.Function, "post", Route = "{UserID}/bike/{BikeID}")] HttpRequest req, string UserID,string BikeID)
+        [OpenApiRequestBody(contentType: "Json", bodyType: typeof(Bikes))]
+        public async Task<IActionResult> UpdateBikeAsync([HttpTrigger(AuthorizationLevel.Function, "post", Route = "bike/{BikeID}")] HttpRequest req, string UserID,string BikeID)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
+
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            Bikes? user = JsonConvert.DeserializeObject<Bikes>(requestBody);
             return new OkObjectResult("Welcome to Azure Functions!");
         }
 
         [Function("DeleteBike")]
         [OpenApiOperation(operationId: "DeleteBike", Description = "Gets a Bike for the Given USERID")]
-        [OpenApiParameter(name: "UserID", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "Userid of the user")]
         [OpenApiParameter(name: "BikeID", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "Bikeid  of the Bike")]
-        public IActionResult DeleteBike([HttpTrigger(AuthorizationLevel.Function, "delete", Route = "{UserID}/bike/{BikeID}")] HttpRequest req, string UserID, string BikeID)
+        public IActionResult DeleteBike([HttpTrigger(AuthorizationLevel.Function, "delete", Route = "bike/{BikeID}")] HttpRequest req, string UserID, string BikeID)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
             return new OkObjectResult("Welcome to Azure Functions!");
@@ -68,11 +80,12 @@ namespace BikeMatrixTest.Functions
 
         [Function("GetAllBike")]
         [OpenApiOperation(operationId: "GetAllBike", Description = "Creates a Bike for the Given USERID")]
-        [OpenApiParameter(name: "UserID", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "Userid of the user.")]
-        public IActionResult GetAllBike([HttpTrigger(AuthorizationLevel.Function, "get", Route = "{UserID}/bike")] HttpRequest req)
+        public IActionResult GetAllBike([HttpTrigger(AuthorizationLevel.Function, "get", Route = "/bike")] HttpRequest req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
             return new OkObjectResult("Welcome to Azure Functions!");
         }
+
+        
     }
 }

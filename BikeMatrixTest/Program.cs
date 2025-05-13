@@ -1,3 +1,5 @@
+using BikeMatrixTest.Interfaces;
+using BikeMatrixTest.Services;
 using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,6 +11,7 @@ builder.ConfigureFunctionsWebApplication();
 builder.ConfigureServices(services =>
 {
     // Add the services here
+    services.AddScoped<IBikeServices, BikeServices>();
 });
 
 builder.ConfigureLogging(logging =>
