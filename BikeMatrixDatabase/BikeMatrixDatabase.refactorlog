@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="2bbcb237-e954-4b38-81cf-e8fb4fe482f5" ChangeDateTime="05/13/2025 00:39:20">
+    <Property Name="ElementName" Value="[dbo].[Bikes].[GlobalID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Bikes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="GUID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="cd18fae9-6425-4447-a24c-3ba9e2edacd3" ChangeDateTime="05/13/2025 02:25:06">
+    <Property Name="ElementName" Value="[dbo].[Bikes].[GUID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Bikes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EmailAddress" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5eec8355-df0a-4f20-a9bc-afb7f17abdfd" ChangeDateTime="05/13/2025 02:25:30">
+    <Property Name="ElementName" Value="[dbo].[Bikes].[Year]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Bikes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="YearOfManufactor" />
+  </Operation>
+</Operations>
