@@ -1,0 +1,35 @@
+name: Build, Test, and Publish Results
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x' # Change to your required version
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build project
+        run: dotnet build BikeMatrixTest\BikeMatrixTest.sln --configuration Release --no-restore
+
+      - name: Run tests
+        run: dotnet test BikeMatrixTest.Test\BikeMatrixTest.Test.csproj  --configuration Release --no-restore --logger trx --results-directory test-results
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: test-results/**/*.trx
