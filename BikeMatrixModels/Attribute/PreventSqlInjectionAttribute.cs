@@ -9,14 +9,15 @@ namespace BikeMatrixModels.Attribute
 {
     public class PreventSqlInjectionAttribute : ValidationAttribute
     {
-        public PreventSqlInjectionAttribute() {
+        public PreventSqlInjectionAttribute()
+        {
             ErrorMessage = "Potential SQL injection detected";
         }
         private readonly string[] SqlKeywords =
         {
         "SELECT", "INSERT", "UPDATE", "DELETE", "DROP", "ALTER", "CREATE", "EXEC", "--", ";", "'"
          };
-        
+
         public override bool IsValid(object value)
         {
             if (value is string input)

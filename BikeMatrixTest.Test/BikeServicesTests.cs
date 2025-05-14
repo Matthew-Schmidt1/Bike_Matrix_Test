@@ -32,6 +32,25 @@ namespace BikeMatrixTest.Test
             }
         }
 
+        [TestMethod]
+        public async Task TestForSqlInjection()
+        {
+            // Arrange
+            BikeServices servicesUnderTest = GetService();
+
+            try
+            {
+                // Act
+                await servicesUnderTest.createBikeAsync(new Bikes { Brand = "SELECT * FROM Users WHERE Username = ' ' OR 1=1 -- '", EmailAddress = "Example@example.com", Model = "mod", YearOfManufactor = 2018 });
+                Assert.Fail("Should not reach this code");
+            }
+            catch (BikeMatirxValidationExceptions ex)
+            {
+                Assert.IsNotNull(ex.Errors);
+                Assert.IsTrue(ex.Errors[0].Contains("Potential SQL injection detected"));
+            }
+        }
+
         private static BikeServices GetService()
         {
             // Arrange

@@ -13,6 +13,7 @@ namespace BikeMatrixModels
         public int id { get; set; }
         [Required]
         [EmailAddress]
+        [PreventSqlInjection]
         public string EmailAddress { get; set; }
         [Required]
         [PreventSqlInjection]
