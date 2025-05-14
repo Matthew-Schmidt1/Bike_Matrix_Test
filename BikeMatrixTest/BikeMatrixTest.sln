@@ -5,7 +5,6 @@ VisualStudioVersion = 17.13.35818.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeMatrixTest", "BikeMatrixTest.csproj", "{C2BA02C6-6EE9-40FB-91EC-4431E615ACDC}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "BikeMatrixDatabase", "..\BikeMatrixDatabase\BikeMatrixDatabase.sqlproj", "{FD53A9C8-67D1-472B-967B-46F46111BEBB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeMatrixModels", "..\BikeMatrixModels\BikeMatrixModels.csproj", "{F005854D-4E77-4570-B2D6-7B6C5D9D81B4}"
 EndProject

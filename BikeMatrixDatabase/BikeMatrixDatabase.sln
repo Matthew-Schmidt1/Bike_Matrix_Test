@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "BikeMatrixDatabase", "BikeMatrixDatabase.sqlproj", "{DA88D4D7-BB6F-46A4-902F-0128C98AAA51}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA88D4D7-BB6F-46A4-902F-0128C98AAA51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA88D4D7-BB6F-46A4-902F-0128C98AAA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA88D4D7-BB6F-46A4-902F-0128C98AAA51}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{DA88D4D7-BB6F-46A4-902F-0128C98AAA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA88D4D7-BB6F-46A4-902F-0128C98AAA51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA88D4D7-BB6F-46A4-902F-0128C98AAA51}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {00B00DBF-F0BA-4498-817D-566C09B9CB60}
+	EndGlobalSection
+EndGlobal

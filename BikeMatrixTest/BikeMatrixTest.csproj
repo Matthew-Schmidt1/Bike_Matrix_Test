@@ -39,7 +39,6 @@
     <Using Include="System.Threading.ExecutionContext" Alias="ExecutionContext" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BikeMatrixDatabase\BikeMatrixDatabase.sqlproj" />
     <ProjectReference Include="..\BikeMatrixModels\BikeMatrixModels.csproj" />
   </ItemGroup>
 </Project>
