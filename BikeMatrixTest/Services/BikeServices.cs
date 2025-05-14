@@ -1,6 +1,8 @@
 ﻿using BikeMatrixModels;
+using BikeMatrixTest.Exceptions;
 using BikeMatrixTest.Interfaces;
 using Dapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -12,10 +14,12 @@ namespace BikeMatrixTest.Services
     {
        private readonly string _connectionString;
         private readonly ILogger _logger;
-        public BikeServices(IConfiguration configuration,ILogger<BikeServices> Logger)
+        private readonly ISqlConnectionFactory _connectionFactory;
+        public BikeServices(IConfiguration configuration,ILogger<BikeServices> Logger, ISqlConnectionFactory sqlConnectionFactory)
         {
             _logger = Logger;
             _connectionString = configuration.GetConnectionString("LocalDbConnection");
+            _connectionFactory = sqlConnectionFactory;
         }
 
         /// <summary>
@@ -26,7 +30,11 @@ namespace BikeMatrixTest.Services
         public async Task createBikeAsync(Bikes bike)
         {
             _logger.LogTrace($"Starting Method {nameof(createBikeAsync)}");
-            using (var connection = new SqlConnection(_connectionString))
+            if (!bike.ValidateObject(out var bikeResponse))
+            {
+                throw new BikeMatirxValidationExceptions() { Errors = bikeResponse };
+            }
+            using (var connection = _connectionFactory.GetSqlConnection(_connectionString))
             {
                 await connection.ExecuteScalarAsync<int>("CreateBike", new
                 {
@@ -47,7 +55,7 @@ namespace BikeMatrixTest.Services
         public async Task<Bikes> GetBikeAsync(int BikeId)
         {
             _logger.LogTrace($"Starting Method {nameof(GetBikeAsync)}");
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = _connectionFactory.GetSqlConnection(_connectionString))
             {
                 return (await connection.QueryAsync<Bikes>("GetBike", new { BikeID = BikeId }, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
@@ -57,7 +65,12 @@ namespace BikeMatrixTest.Services
         {
 
             _logger.LogTrace($"Starting Method {nameof(UpdateBikeAsync)}");
-            using (var connection = new SqlConnection(_connectionString))
+            if (!newBike.ValidateObject(out var bikeResponse))
+            {
+                throw new BikeMatirxValidationExceptions() { Errors = bikeResponse};
+            }
+
+            using (var connection = _connectionFactory.GetSqlConnection(_connectionString))
             {
                 await connection.ExecuteScalarAsync<int>("UpdateBike", new
                 {
@@ -78,7 +91,7 @@ namespace BikeMatrixTest.Services
         public async Task<bool> DeleteBikeAsync(int bikesID)
         {
             _logger.LogTrace($"Starting Method {nameof(DeleteBikeAsync)}");
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = _connectionFactory.GetSqlConnection(_connectionString))
             {
                 var result = await connection.ExecuteScalarAsync<int>(
                     "DeleteBike",
@@ -97,7 +110,7 @@ namespace BikeMatrixTest.Services
         public async Task<IEnumerable<Bikes>> getAllBikesAsync()
         {
             _logger.LogTrace($"Starting Method {nameof(getAllBikesAsync)}");
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = _connectionFactory.GetSqlConnection(_connectionString))
             {
                 return await connection.QueryAsync<Bikes>("GetAllBikes", commandType: CommandType.StoredProcedure);
             }

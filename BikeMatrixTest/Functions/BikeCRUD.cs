@@ -1,13 +1,14 @@
+using BikeMatrixModels;
+using BikeMatrixTest.Exceptions;
+using BikeMatrixTest.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System.Net;
-using BikeMatrixModels;
 using Newtonsoft.Json;
-using BikeMatrixTest.Interfaces;
+using System.Net;
 
 namespace BikeMatrixTest.Functions
 {
@@ -25,26 +26,34 @@ namespace BikeMatrixTest.Functions
         [OpenApiOperation(operationId: "CreateBike", Description = "Creates a Bike")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Bikes), Description = "")]
         [OpenApiRequestBody(contentType: "Json", bodyType: typeof(Bikes))]
+        [OpenApiResponseWithoutBody(HttpStatusCode.Created, Description = "The Bike has been Created.")]
+        [OpenApiResponseWithoutBody(HttpStatusCode.BadRequest, Description = "Any Validation Errors.")]
         public async Task<IActionResult> CreateBikeAsync([HttpTrigger(AuthorizationLevel.Function, "post", Route = "bike")] HttpRequest req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             Bikes? bike = JsonConvert.DeserializeObject<Bikes>(requestBody);
-            if(!bike.ValidateObject(out var bikeResponse)){
-                return new BadRequestObjectResult(bikeResponse);
-            }
-            
+           
             if (bike == null)
                 return new BadRequestObjectResult("Invalid request body");
-            await _bikeServices.createBikeAsync(bike);
-            return new OkObjectResult("Welcome to Azure Functions!");
+            try
+            {
+                await _bikeServices.createBikeAsync(bike);
+                return new CreatedResult();
+            }
+            catch (BikeMatirxValidationExceptions ex)
+            {
+                return new BadRequestObjectResult(ex.Errors);
+            }
         }
 
 
         [Function("GetBike")]
         [OpenApiOperation(operationId: "GetBike", Description = "Gets a Bike for the Given USERID")]
         [OpenApiParameter(name: "BikeID", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "Bikeid  of the Bike")]
+        [OpenApiResponseWithoutBody(HttpStatusCode.OK, Description = "Returns the request bike")]
+        [OpenApiResponseWithoutBody(HttpStatusCode.NotFound, Description = "Entry not found")]
         public async Task<IActionResult> GetBikeAsync([HttpTrigger(AuthorizationLevel.Function, "get", Route = "bike/{BikeID}")] HttpRequest req, string BikeID)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
@@ -52,7 +61,15 @@ namespace BikeMatrixTest.Functions
             int ValidateBikeId = int.Parse(BikeID);
             if (ValidateBikeId > 0)
             {
-                return new OkObjectResult(await _bikeServices.GetBikeAsync(ValidateBikeId));
+                var bike = await _bikeServices.GetBikeAsync(ValidateBikeId);
+                if (bike != null)
+                {
+                    return new OkObjectResult(bike);
+                }
+                else
+                {
+                    return new NotFoundResult();
+                }
             }
 
             return new BadRequestObjectResult("Invalid Bike");
@@ -62,6 +79,7 @@ namespace BikeMatrixTest.Functions
         [OpenApiOperation(operationId: "UpdateBike", Description = "Gets a Bike for the Given USERID")]
         [OpenApiParameter(name: "BikeID", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "Bikeid  of the Bike")]
         [OpenApiRequestBody(contentType: "Json", bodyType: typeof(Bikes))]
+        [OpenApiResponseWithBody(HttpStatusCode.OK, "json", typeof(Bikes), Description = "The Updated Bike")]
         public async Task<IActionResult> UpdateBikeAsync([HttpTrigger(AuthorizationLevel.Function, "post", Route = "bike/{BikeID}")] HttpRequest req, string BikeID)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
@@ -70,17 +88,23 @@ namespace BikeMatrixTest.Functions
             Bikes? bike = JsonConvert.DeserializeObject<Bikes>(requestBody);
             if (bike == null)
                 return new BadRequestObjectResult("Invalid request body");
-            if (!bike.ValidateObject(out var bikeResponse))
+            try
             {
-                return new BadRequestObjectResult(bikeResponse);
+                var updatedBike = await _bikeServices.UpdateBikeAsync(bike);
+                return new OkObjectResult(updatedBike);
             }
-            var updatedBike = await _bikeServices.UpdateBikeAsync(bike);
-            return new OkObjectResult(updatedBike);
+            catch (BikeMatirxValidationExceptions ex)
+            {
+                return new BadRequestObjectResult(ex.Errors);
+            }
+
         }
 
         [Function("DeleteBike")]
         [OpenApiOperation(operationId: "DeleteBike", Description = "Gets a Bike for the Given USERID")]
         [OpenApiParameter(name: "BikeID", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "Bikeid  of the Bike")]
+        [OpenApiResponseWithoutBody(HttpStatusCode.NoContent, Description = "Successfull deltion of the entry")]
+        [OpenApiResponseWithoutBody(HttpStatusCode.NotFound, Description = "Entry not found")]
         public async Task<IActionResult> DeleteBikeAsync([HttpTrigger(AuthorizationLevel.Function, "delete", Route = "bike/{BikeID}")] HttpRequest req, string BikeID)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");

@@ -1,3 +1,4 @@
+using BikeMatrixTest.Factories;
 using BikeMatrixTest.Interfaces;
 using BikeMatrixTest.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ builder.ConfigureServices(services =>
 {
     // Add the services here
     services.AddScoped<IBikeServices, BikeServices>();
+    services.AddScoped<ISqlConnectionFactory, SqlConnectionFactory>();
 });
 
 builder.ConfigureLogging(logging =>

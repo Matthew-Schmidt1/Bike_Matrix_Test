@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BikeMatrixModels.Attribute;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,10 +15,13 @@ namespace BikeMatrixModels
         [EmailAddress]
         public string EmailAddress { get; set; }
         [Required]
+        [PreventSqlInjection]
         public string Brand { get; set; }
         [Required]
+        [PreventSqlInjection]
         public string Model { get; set; }
         [Required]
+        [Range(1800, int.MaxValue, ErrorMessage = "YearOfManufactor must be at least 1800.")]
         public int YearOfManufactor { get; set; }
 
 
