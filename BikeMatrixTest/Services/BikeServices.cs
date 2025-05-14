@@ -2,8 +2,6 @@
 using BikeMatrixTest.Exceptions;
 using BikeMatrixTest.Interfaces;
 using Dapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Data;

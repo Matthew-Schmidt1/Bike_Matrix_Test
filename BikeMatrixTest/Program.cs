@@ -27,13 +27,7 @@ builder.ConfigureLogging(logging =>
         }
     });
     logging.SetMinimumLevel(LogLevel.Trace);
-    logging.AddFilter("FunctionTest.Models", LogLevel.Information);
-    logging.AddFilter("FunctionTest.Services.ManagerCountedServiceBase", LogLevel.Information);
-    logging.AddFilter("FunctionTest.Services.CharacterManagerService", LogLevel.Information);
-    logging.AddFilter("FunctionTest.Services.WordManagerService", LogLevel.Information);
-    logging.AddFilter("FunctionTest.Functions", LogLevel.Trace);
     logging.AddFilter("Microsoft", LogLevel.Information);
-    logging.AddJsonConsole();
 });
 // Application Insights isn't enabled by default. See https://aka.ms/AAt8mw4.
 // builder.Services
