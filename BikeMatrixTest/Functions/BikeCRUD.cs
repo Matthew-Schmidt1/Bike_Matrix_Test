@@ -40,7 +40,8 @@ namespace BikeMatrixTest.Functions
             try
             {
                 await _bikeServices.createBikeAsync(bike);
-                return new CreatedResult();
+                return new StatusCodeResult(201);
+                //new CreatedResult(); for some reason this was returning a 204
             }
             catch (BikeMatirxValidationExceptions ex)
             {

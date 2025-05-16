@@ -70,6 +70,7 @@
     <Build Include="Stored Procedures\UpdateBike.sql" />
     <Build Include="Stored Procedures\DeleteBike.sql" />
     <Build Include="Stored Procedures\GetAllBikes.sql" />
+    <Build Include="Tables\Users.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BikeMatrixDatabase.refactorlog" />

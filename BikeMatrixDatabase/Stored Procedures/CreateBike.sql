@@ -7,8 +7,21 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    INSERT INTO Bikes (EmailAddress, Brand, Model, YearOfManufactor)
-    VALUES (@EmailAddress, @Brand, @Model, @YearOfManufactor);
+    DECLARE @InsertedId INT;
+
+    -- Insert if the email doesn't exist
+    INSERT INTO [dbo].[BikeMatrixUsers] (EmailAddress)
+    SELECT @EmailAddress
+    WHERE NOT EXISTS (
+        SELECT 1 FROM [dbo].[BikeMatrixUsers] WHERE EmailAddress = @EmailAddress
+    );
+
+    -- If no insert happened, retrieve existing ID
+    IF @InsertedId IS NULL
+        SELECT @InsertedId = Id FROM [dbo].[BikeMatrixUsers] WHERE EmailAddress = @EmailAddress;
+
+    INSERT INTO Bikes (UserID, Brand, Model, YearOfManufactor)
+    VALUES (@InsertedId, @Brand, @Model, @YearOfManufactor);
 
     -- Return the newly inserted Bike ID
     RETURN SCOPE_IDENTITY();

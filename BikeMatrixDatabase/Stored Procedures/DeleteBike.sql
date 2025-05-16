@@ -1,12 +1,9 @@
 ﻿CREATE PROCEDURE DeleteBike
-    @Id INT
+@Id INT
 AS
 BEGIN
     SET NOCOUNT ON;
-
-    DELETE FROM Bikes WHERE Id = @Id;
-
-    -- Return number of rows affected
+    DELETE Bikes
+    WHERE  Id = @Id;
     SELECT @@ROWCOUNT AS RowsDeleted;
-END;
-GO
+END
