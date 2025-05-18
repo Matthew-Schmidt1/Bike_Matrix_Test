@@ -4,27 +4,29 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - 'BikeMatricDatabase/**'
-
+      - 'BikeMatrixDatabase/**'
   pull_request:
     branches: [ "main" ]
     paths:
-      - 'BikeMatricDatabase/**'
+      - 'BikeMatrixDatabase/**'
+
 concurrency:
-  group: build-${{ github.ref }}
+  group: build-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: msbuild restore ./BikeMatricDatabase/BikeMatrixDatabase.sln
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Restore NuGet packages
+        run: nuget restore BikeMatrixDatabase\BikeMatrixDatabase.sln
 
       - name: Build project
-        run: msbuild build ./BikeMatricDatabase/BikeMatrixDatabase.sln --configuration Release --no-restore
-
+        run: msbuild BikeMatrixDatabase\BikeMatrixDatabase.sln /p:Configuration=Release /p:RestorePackages=false

@@ -1,10 +1,18 @@
-name: Build, Test, and Publish Results
+name: Build, Test BikeMatrixTest
 
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'src/**'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'src/**'
+
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-and-test:
@@ -20,16 +28,10 @@ jobs:
           dotnet-version: '8.0.x' # Change to your required version
 
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore ./src/BikeMatrixTest.sln
 
       - name: Build project
-        run: dotnet build BikeMatrixTest\BikeMatrixTest.sln --configuration Release --no-restore
+        run: dotnet build ./src/BikeMatrixTest.sln --configuration Release --no-restore
 
       - name: Run tests
-        run: dotnet test BikeMatrixTest.Test\BikeMatrixTest.Test.csproj  --configuration Release --no-restore --logger trx --results-directory test-results
-
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
-        with:
-          files: test-results/**/*.trx
+        run: dotnet test ./src/BikeMatrixTest.Test/BikeMatrixTest.Test.csproj  --configuration Release --no-restore --logger trx --results-directory ./test-results
