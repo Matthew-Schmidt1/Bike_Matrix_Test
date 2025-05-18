@@ -3,8 +3,12 @@ name: Build, Test, and Publish Results
 on:
   push:
     branches: [ "main" ]
+      paths:
+      - 'src/**'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'src/**'
 
 concurrency:
   group: build-${{ github.ref }}
@@ -24,10 +28,10 @@ jobs:
           dotnet-version: '8.0.x' # Change to your required version
 
       - name: Install dependencies
-        run: dotnet restore ./BikeMatrixTest/BikeMatrixTest.sln
+        run: dotnet restore ./src/BikeMatrixTest/BikeMatrixTest.sln
 
       - name: Build project
-        run: dotnet build ./BikeMatrixTest/BikeMatrixTest.sln --configuration Release --no-restore
+        run: dotnet build ./src/BikeMatrixTest/BikeMatrixTest.sln --configuration Release --no-restore
 
       - name: Run tests
-        run: dotnet test ./BikeMatrixTest.Test/BikeMatrixTest.Test.csproj  --configuration Release --no-restore --logger trx --results-directory ./test-results
+        run: dotnet test ./src/BikeMatrixTest.Test/BikeMatrixTest.Test.csproj  --configuration Release --no-restore --logger trx --results-directory ./test-results
