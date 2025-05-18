@@ -1,0 +1,30 @@
+name: Build Database Project
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'BikeMatricDatabase/**'
+
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'BikeMatricDatabase/**'
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: msbuild restore ./BikeMatricDatabase/BikeMatrixDatabase.sln
+
+      - name: Build project
+        run: msbuild build ./BikeMatricDatabase/BikeMatrixDatabase.sln --configuration Release --no-restore
+
