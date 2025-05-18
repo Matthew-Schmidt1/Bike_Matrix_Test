@@ -4,13 +4,13 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - 'BikeMatricDatabase/**'
+      - './BikeMatricDatabase/**'
 
   pull_request:
     branches: [ "main" ]
     paths:
-      - 'BikeMatricDatabase/**'
-      
+      - './BikeMatricDatabase/**'
+
 concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true

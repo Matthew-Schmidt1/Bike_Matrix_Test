@@ -1,4 +1,4 @@
-name: Build, Test, and Publish Results
+name: Build, Test BikeMatrixTest
 
 on:
   push:
