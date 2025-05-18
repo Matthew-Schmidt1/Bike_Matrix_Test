@@ -11,7 +11,7 @@ on:
       - 'src/**'
 
 concurrency:
-  group: build-${{ github.ref }}
+  group: build-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

@@ -11,19 +11,22 @@ on:
       - 'BikeMatrixDatabase/**'
 
 concurrency:
-  group: build-${{ github.ref }}
+  group: build-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: msbuild restore ./BikeMatrixDatabase/BikeMatrixDatabase.sln
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Restore NuGet packages
+        run: nuget restore ./BikeMatrixDatabase/BikeMatrixDatabase.sln
 
       - name: Build project
         run: msbuild build ./BikeMatrixDatabase/BikeMatrixDatabase.sln --configuration Release --no-restore
