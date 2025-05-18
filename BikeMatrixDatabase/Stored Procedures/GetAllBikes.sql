@@ -7,7 +7,7 @@ BEGIN
            Brand,
            Model,
            YearOfManufactor
-    FROM   Bikes AS b 
+    FROM   Bikes AS b
            INNER JOIN
            BikeMatrixUsers AS u
            ON u.Id = b.UserID;
