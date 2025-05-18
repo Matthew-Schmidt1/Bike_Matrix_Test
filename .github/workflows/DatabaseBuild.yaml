@@ -4,12 +4,11 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - './BikeMatricDatabase/**'
-
+      - 'BikeMatrixDatabase/**'
   pull_request:
     branches: [ "main" ]
     paths:
-      - './BikeMatricDatabase/**'
+      - 'BikeMatrixDatabase/**'
 
 concurrency:
   group: build-${{ github.ref }}
@@ -24,8 +23,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: msbuild restore ./BikeMatricDatabase/BikeMatrixDatabase.sln
+        run: msbuild restore ./BikeMatrixDatabase/BikeMatrixDatabase.sln
 
       - name: Build project
-        run: msbuild build ./BikeMatricDatabase/BikeMatrixDatabase.sln --configuration Release --no-restore
+        run: msbuild build ./BikeMatrixDatabase/BikeMatrixDatabase.sln --configuration Release --no-restore
 
