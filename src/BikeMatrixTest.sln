@@ -3,12 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35818.85
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeMatrixTest", "BikeMatrixTest.csproj", "{C2BA02C6-6EE9-40FB-91EC-4431E615ACDC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeMatrixTest", "BikeMatrixTest\BikeMatrixTest.csproj", "{C2BA02C6-6EE9-40FB-91EC-4431E615ACDC}"
 EndProject
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeMatrixModels", "..\BikeMatrixModels\BikeMatrixModels.csproj", "{F005854D-4E77-4570-B2D6-7B6C5D9D81B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeMatrixModels", "BikeMatrixModels\BikeMatrixModels.csproj", "{F005854D-4E77-4570-B2D6-7B6C5D9D81B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeMatrixTest.Test", "..\BikeMatrixTest.Test\BikeMatrixTest.Test.csproj", "{CD673B15-862A-47FF-AEE0-DE5C5F1F9282}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeMatrixTest.Test", "BikeMatrixTest.Test\BikeMatrixTest.Test.csproj", "{CD673B15-862A-47FF-AEE0-DE5C5F1F9282}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
