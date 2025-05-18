@@ -26,8 +26,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1
 
       - name: Restore NuGet packages
-        run: nuget restore ./BikeMatrixDatabase/BikeMatrixDatabase.sln
+        run: nuget restore BikeMatrixDatabase\BikeMatrixDatabase.sln
 
       - name: Build project
-        run: msbuild build ./BikeMatrixDatabase/BikeMatrixDatabase.sln --configuration Release --no-restore
-
+        run: msbuild BikeMatrixDatabase\BikeMatrixDatabase.sln /p:Configuration=Release /p:RestorePackages=false
